@@ -1,0 +1,1313 @@
+{
+	"info": {
+		"_postman_id": "de4c5c44-0587-4605-84ae-e936ffcd098e",
+		"name": "ADMIN API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19252176"
+	},
+	"item": [
+		{
+			"name": "Generate OTP",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"    console.log(\"Response time is less than 200ms\")",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phone\" : \"6219328462\",\r\n    \"type\" : 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/service/generate-otp",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"service",
+						"generate-otp"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "generate otp",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_number\" : \"9876543210\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cfuat.creditfair.in/api/generate-otp",
+							"protocol": "https",
+							"host": [
+								"cfuat",
+								"creditfair",
+								"in"
+							],
+							"path": [
+								"api",
+								"generate-otp"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\r\n    \"message\" : \"OTP request sent\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Verify OTP",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var variable_value = pm.response.json()",
+							"console.log(variable_value.token);",
+							"pm.environment.set(\"token\", variable_value.token)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phone\": \"6219328462\",\r\n    \"type\": 4,\r\n    \"otp\": 158345\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}service/verify-otp",
+					"host": [
+						"{{HOST}}service"
+					],
+					"path": [
+						"verify-otp"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "verify otp",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mobile_number\" : \"9876543210\",\r\n    \"otp\" : \"98769\",\r\n    \"user_type\" : \"ncd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://cfuat.creditfair.in/service/verify-otp",
+							"protocol": "https",
+							"host": [
+								"cfuat",
+								"creditfair",
+								"in"
+							],
+							"path": [
+								"service",
+								"verify-otp"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\r\n    \"message\" : \"OTP verified\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Verify Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							" var variable_value = pm.response.json()",
+							" console.log(variable_value.token);",
+							" pm.environment.set(\"token\", variable_value.token)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"cfcadmin@creditfair.in\",\r\n    \"type\" : 4,\r\n    \"password\" : \"Admin@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}service/verify-password",
+					"host": [
+						"{{HOST}}service"
+					],
+					"path": [
+						"verify-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dashboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}api/dashboard",
+					"host": [
+						"{{HOST}}api"
+					],
+					"path": [
+						"dashboard"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Invest - Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"payment_method\": 1, //1 - netbanking, 2 - UPI, 3 - NEFT, 4 - RIGS, 5 - IMPS\n    \"payment_gateway\": 1, //1 - paytm, 2- payu\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}"
+				},
+				{
+					"name": "Invest - Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment_method\": 1,\n    \"payment_gateway\": 1,\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": "redirect to payment page"
+				}
+			]
+		},
+		{
+			"name": "Get Recent Transaction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}payment/get-recent-transaction",
+					"host": [
+						"{{HOST}}payment"
+					],
+					"path": [
+						"get-recent-transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Investors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}investor/get-investors",
+					"host": [
+						"{{HOST}}investor"
+					],
+					"path": [
+						"get-investors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get IFA",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/get-ifa",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"get-ifa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Investor Portfolio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}investor/get-investor-portfolio?id=202",
+					"host": [
+						"{{HOST}}investor"
+					],
+					"path": [
+						"get-investor-portfolio"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "202"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Investor Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}investor/get-investor-details?id=613",
+					"host": [
+						"{{HOST}}investor"
+					],
+					"path": [
+						"get-investor-details"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "613"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Accounts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}api/get-accounts?id=262",
+					"host": [
+						"{{HOST}}api"
+					],
+					"path": [
+						"get-accounts"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "262"
+						},
+						{
+							"key": "account_id",
+							"value": "172",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Invest - Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"payment_method\": 1, //1 - netbanking, 2 - UPI, 3 - NEFT, 4 - RIGS, 5 - IMPS\n    \"payment_gateway\": 1, //1 - paytm, 2- payu\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}"
+				},
+				{
+					"name": "Invest - Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment_method\": 1,\n    \"payment_gateway\": 1,\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": "redirect to payment page"
+				}
+			]
+		},
+		{
+			"name": "Get Schemes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}api/get-schemes",
+					"host": [
+						"{{HOST}}api"
+					],
+					"path": [
+						"get-schemes"
+					],
+					"query": [
+						{
+							"key": "scheme_id",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "payout_id",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Invest - Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"payment_method\": 1, //1 - netbanking, 2 - UPI, 3 - NEFT, 4 - RIGS, 5 - IMPS\n    \"payment_gateway\": 1, //1 - paytm, 2- payu\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}"
+				},
+				{
+					"name": "Invest - Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment_method\": 1,\n    \"payment_gateway\": 1,\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": "redirect to payment page"
+				}
+			]
+		},
+		{
+			"name": "Invest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"payment_method\": 2,\n    \"payment_gateway\": 1,\n    \"amount\": 12678,\n    \"payout_type\": 2,\n    \"txn_date\" : \"2022-02-01 12:30:00\",\n    \"mhp\": 7,\n    \"transaction_reference\" : \"UTIB00003434\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}api/investment",
+					"host": [
+						"{{HOST}}api"
+					],
+					"path": [
+						"investment"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Invest - Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"payment_method\": 1, //1 - netbanking, 2 - UPI, 3 - NEFT, 4 - RIGS, 5 - IMPS\n    \"payment_gateway\": 1, //1 - paytm, 2- payu\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}"
+				},
+				{
+					"name": "Invest - Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment_method\": 1,\n    \"payment_gateway\": 1,\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": "redirect to payment page"
+				}
+			]
+		},
+		{
+			"name": "Withdrawal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reason\": \"home_loan_repayment\",\n    \"amount\": 10000.00,\n    \"plan\": 4,\n    \"full_portfolio\": true,\n    \"account_id\": 377\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}api/withdrawal",
+					"host": [
+						"{{HOST}}api"
+					],
+					"path": [
+						"withdrawal"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Invest - Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"payment_method\": 1, //1 - netbanking, 2 - UPI, 3 - NEFT, 4 - RIGS, 5 - IMPS\n    \"payment_gateway\": 1, //1 - paytm, 2- payu\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}"
+				},
+				{
+					"name": "Invest - Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment_method\": 1,\n    \"payment_gateway\": 1,\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": "redirect to payment page"
+				}
+			]
+		},
+		{
+			"name": "Passbook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"account_id\": 172,\n    \"start_date\" : \"2021-09-11\",\n    \"end_date\" : \"2022-12-01\"\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}api/passbook",
+					"host": [
+						"{{HOST}}api"
+					],
+					"path": [
+						"passbook"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Invest - Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"payment_method\": 1, //1 - netbanking, 2 - UPI, 3 - NEFT, 4 - RIGS, 5 - IMPS\n    \"payment_gateway\": 1, //1 - paytm, 2- payu\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}"
+				},
+				{
+					"name": "Invest - Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payment_method\": 1,\n    \"payment_gateway\": 1,\n    \"amount\": 10000,\n    \"payout_type\": 1,\n    \"mhp\" : 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "invest",
+							"host": [
+								"invest"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": "redirect to payment page"
+				}
+			]
+		},
+		{
+			"name": "Get Pending Transactions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}service/get-transactions?txn_type=2&date=20-05-2023",
+					"host": [
+						"{{HOST}}service"
+					],
+					"path": [
+						"get-transactions"
+					],
+					"query": [
+						{
+							"key": "txn_type",
+							"value": "2"
+						},
+						{
+							"key": "date",
+							"value": "20-05-2023"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Transaction Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": 2,\n    \"account_id\": 377,\n    \"transaction_id\": \"ZJHTTLTWrH\",\n    \"reason\" : \"Anything\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}service/update-transaction-status",
+					"host": [
+						"{{HOST}}service"
+					],
+					"path": [
+						"update-transaction-status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forgot Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "https://devapp.creditfaircapital.in",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"sunil.yadav@creditfair.in\",\n    \"type\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}service/forgot-password",
+					"host": [
+						"{{HOST}}service"
+					],
+					"path": [
+						"forgot-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reset Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Validate the format of the response body\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.status).to.be.a('string');",
+							"    pm.expect(responseData.message).to.be.a('string');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"YaOyNd\",\n    \"datetime\": \"0A95EWL\",\n    \"password\": \"admin@123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}service/submit-password",
+					"host": [
+						"{{HOST}}service"
+					],
+					"path": [
+						"submit-password"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
